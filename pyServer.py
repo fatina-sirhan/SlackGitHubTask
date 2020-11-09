@@ -19,18 +19,16 @@ def send_to_slack( text_to_send ,channel="#private"):
 app = Flask(__name__)  # Standard Flask app
 webhook = Webhook(app) # Defines '/postreceive' endpoint
 
-@app.route("/", methods=['GET'. 'POST'])        # Standard Flask endpoint
+@app.route("/", methods=['GET', 'POST'])        # Standard Flask endpoint
 def hello_world():
     return "Hello, World!"
 
 
-
 @app.route("/webhook", methods=['GET', 'POST'])
 def respond():
-    if request.method == 'GET':
-        print("This is a GET request")
-    if request.method == 'POST':
-        print("this is post request")
+        print("** New Payload from Github **")
+        print(request.json)
+        return Response(status=200)
 
 #@webhook.hook()        # Defines a handler for the 'push' event
 #def on_push(data):
