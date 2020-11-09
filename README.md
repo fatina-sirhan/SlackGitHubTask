@@ -1,3 +1,2 @@
-# SlackGitHubTask
-hello
+Hello
 I am Fatina
