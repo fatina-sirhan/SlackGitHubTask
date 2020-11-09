@@ -1,16 +1,40 @@
+import os
 from github_webhook import Webhook
 from flask import Flask
+from flask import request, Response
+from flask import json
+from github import Github
+from pathlib import Path
+from dotenv import load_dotenv
+from slack import WebClient
+
+env_path = Path('.') / '.env'
+load_dotenv(dotenv_path=env_path)
+client = WebClient(token=os.environ['TOKEN'])
+
+
+def send_to_slack( text_to_send ,channel="#private"):
+    client.chat_postMessage(channel= channel, text=text_to_send)
 
 app = Flask(__name__)  # Standard Flask app
 webhook = Webhook(app) # Defines '/postreceive' endpoint
 
-@app.route("/")        # Standard Flask endpoint
+@app.route("/", methods=['GET'. 'POST'])        # Standard Flask endpoint
 def hello_world():
     return "Hello, World!"
 
-@webhook.hook()        # Defines a handler for the 'push' event
-def on_push(data):
-    print("Got push with: {0}".format(data))
+
+
+@app.route("/webhook", methods=['GET', 'POST'])
+def respond():
+    if request.method == 'GET':
+        print("This is a GET request")
+    if request.method == 'POST':
+        print("this is post request")
+
+#@webhook.hook()        # Defines a handler for the 'push' event
+#def on_push(data):
+ #   print("Got push with: {0}".format(data))
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=80)
+    app.run(host="127.0.0.1", port=8080)
