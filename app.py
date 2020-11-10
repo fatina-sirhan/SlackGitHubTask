@@ -28,9 +28,9 @@ def hello_world():
 def respond():
     print("** New Payload from Github **")
     #print(request.json)
-    #return Response(status=200)gggg
+    #return Response(status=200)
 
-    data = request.get_json()
+    data = request.json
     return data
 
 #@webhook.hook()        # Defines a handler for the 'push' event
