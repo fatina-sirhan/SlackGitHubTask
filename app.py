@@ -20,15 +20,19 @@ app = Flask(__name__)  # Standard Flask app
 webhook = Webhook(app) # Defines '/postreceive' endpoint
 
 @app.route("/", methods=['GET', 'POST'])        # Standard Flask endpoint
-def hello_world():
+def homepage():
     return "Hello, World!"
 
 
 @app.route("/webhook", methods=['GET', 'POST'])
-def respond():
+#def respond():
+def get_github_notafication():
         print("** New Payload from Github **")
-        print(request.json)
-        return Response(status=200)
+       # print(request.json)
+       # return Response(status=200)
+
+       data = request.get_json()
+       return data
 
 #@webhook.hook()        # Defines a handler for the 'push' event
 #def on_push(data):
