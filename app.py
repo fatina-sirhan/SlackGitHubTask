@@ -23,7 +23,7 @@ webhook = Webhook(app) # Defines '/postreceive' endpoint
 def hello_world():
     return "Hello, World!"
 
-#asdfghjkl
+#asdfghj
 
 @app.route("/webhook", methods=['GET', 'POST'])
 def respond():
