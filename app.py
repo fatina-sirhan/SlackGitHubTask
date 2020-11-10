@@ -26,9 +26,9 @@ def hello_world():
 
 @app.route("/webhook", methods=['GET', 'POST'])
 def respond():
-        print("** New Payload from Github **")
-        print(request.json)
-        return Response(status=200)
+    print("** New Payload from Github **")
+    print(request.json)
+    return Response(status=200)
         #data = request.get_json()
         #return data
 
