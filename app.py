@@ -8,13 +8,13 @@ from pathlib import Path
 from dotenv import load_dotenv
 from slack import WebClient
 
-env_path = Path('.') / '.env'
-load_dotenv(dotenv_path=env_path)
-client = WebClient(token=os.environ['TOKEN'])
+#env_path = Path('.') / '.env'
+#load_dotenv(dotenv_path=env_path)
+#client = WebClient(token=os.environ['TOKEN'])
 
 
-def send_to_slack( text_to_send ,channel="#private"):
-    client.chat_postMessage(channel= channel, text=text_to_send)
+#def send_to_slack( text_to_send ,channel="#private"):
+ #   client.chat_postMessage(channel= channel, text=text_to_send)
 
 app = Flask(__name__)  # Standard Flask app
 webhook = Webhook(app) # Defines '/postreceive' endpoint
