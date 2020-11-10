@@ -25,12 +25,11 @@ def homepage():
 
 
 @app.route("/webhook", methods=['GET', 'POST'])
-#def respond():
-def get_github_payload():
+def respond():
+#def get_github_payload():
         print("** New Payload from Github **")
        # print(request.json)
        # return Response(status=200)
-
         data = request.get_json()
         return data
 
