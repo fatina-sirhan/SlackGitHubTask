@@ -8,13 +8,13 @@ from pathlib import Path
 from dotenv import load_dotenv
 from slack import WebClient
 
-#env_path = Path('.') / '.env'
-#load_dotenv(dotenv_path=env_path)
-#client = WebClient(token=os.environ['TOKEN'])
+env_path = Path('.') / '.env'
+load_dotenv(dotenv_path=env_path)
+client = WebClient(token=os.environ['TOKEN'])
 
 
-#def send_to_slack( text_to_send ,channel="#private"):
- #   client.chat_postMessage(channel= channel, text=text_to_send)
+def send_to_slack( text_to_send ,channel="#private"):
+    client.chat_postMessage(channel= channel, text=text_to_send)
 
 app = Flask(__name__)  # Standard Flask app
 webhook = Webhook(app) # Defines '/postreceive' endpoint
@@ -26,17 +26,38 @@ def hello_world():
 
 @app.route("/webhook", methods=['GET', 'POST'])
 def respond():
-    print("** New Payload from Github **")
-    #print(request.json)hhh
-    #return Response(status=200)
+    if request.method == 'GET':
+        print("This is a GET request")
+    if request.method == 'POST':
+        print("this is post request")
 
     data = request.json
-    print(data)
-    return data
+  
+    if 'action' not in data:
+        print(" *********** no action here *********** ")
+        print(" *********** no action here *********** ")
+    else:
+        event_action = data['action']
+        print("action is: "+ event_action)
 
-#@webhook.hook()        # Defines a handler for the 'push' event
-#def on_push(data):
- #   print("Got push with: {0}".format(data))
+
+    repo_name = data['repository']['name']
+    headers_event = request.headers['X-GitHub-Event']
+    event_sender = data['sender']['login']
+
+    for commit in data['commits']:
+        event_commit_comment = commit['message']
+        event_timestamp = commit['timestamp']
+        modified_file_name = commit['modified']
+    file_name = str(modified_file_name)
+    
+    if headers_event == 'pull_request':
+        result_str = "Event occurred is: "+ headers_event + "  Action is: " + event_action  +"  Updated repo is: "+ repo_name + "  User is: "+ event_sender +  "  Commit is: "+ event_commit_comment + "  Modified file is: " + file_name + "  Updated date and time is: " + str(event_timestamp)
+    else:
+        result_str = "Event occurred is: "+ headers_event + "  Updated repo is: "+ repo_name + "  User is: "+ event_sender +  "  Commit is: "+ event_commit_comment + "  Modified file is: " + file_name + "  Updated date and time is: " + str(event_timestamp)
+   
+    send_to_slack(result_str)
+    return data    
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080)
