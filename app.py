@@ -17,7 +17,7 @@ def send_to_slack( text_to_send ,channel="#private"):
     client.chat_postMessage(channel= channel, text=text_to_send)
 
 app = Flask(__name__)  # Standard Flask app
-webhook = Webhook(app) # Defines '/postreceive' endpoint sdfghjkl
+webhook = Webhook(app) # Defines '/postreceive' endpoint 
 
 @app.route("/", methods=['GET', 'POST'])        # Standard Flask endpoint 
 def hello_world():
