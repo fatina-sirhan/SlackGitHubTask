@@ -14,7 +14,7 @@ client = WebClient(token=os.environ['TOKEN'])
 
 
 def send_to_slack( text_to_send ,channel="#private"):
-    client.chat_postMessage(channel= channel, text="text from app")
+    client.chat_postMessage(channel= channel, text=text_to_send)
 
 app = Flask(__name__)  # Standard Flask app
 webhook = Webhook(app) # Defines '/postreceive' endpoint sdfghjkl
